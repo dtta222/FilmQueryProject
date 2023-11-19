@@ -81,8 +81,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			// Create an Actor object
 			actor = new Actor(fn, ln);
 			actor.setId(actorResult.getInt("id"));
-			actor.setFirstName(actorResult.getString("first_name"));
-			actor.setFirstName(actorResult.getString("last_name"));
+			/*actor.setFirstName(actorResult.getString("first_name"));
+			actor.setFirstName(actorResult.getString("last_name"));*/
 		}
 
 		actorResult.close();
@@ -97,7 +97,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PWD);
 
-			String sql = "SELECT film.* FROM film JOIN film_actor ON film.id = film_actor.film_id WHERE film_actor.actor_id = ?";
+			String sql = "SELECT film.* "
+					+ "FROM film JOIN film_actor ON film.id = film_actor.film_id "
+					+ "WHERE film_actor.actor_id = ?";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, actorId);
@@ -127,7 +129,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PWD);
 
-			String sql = "SELECT actor.*\n" + "FROM actor\n" + "JOIN film_actor ON actor.id = film_actor.actor_id\n"
+			String sql = "SELECT actor.*\n" + "FROM actor\n" 
+					+ "JOIN film_actor ON actor.id = film_actor.actor_id\n"
 					+ "WHERE film_actor.film_id = ?;";
 
 			PreparedStatement stmt = conn.prepareStatement(sql);
